@@ -11,7 +11,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Client extends Authenticatable
 {
     use Notifiable;
-    protected $table='admins';
+    protected $table='clients';
     protected $fillable=['name','email','password'];
     protected $hidden=['password','remember_token'];
+
 }

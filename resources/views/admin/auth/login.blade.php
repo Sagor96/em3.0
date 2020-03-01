@@ -1,13 +1,13 @@
 @extends('frontend.app')
 
-@section('title','ClientLogin')
+@section('title','AdminLogin')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card" style=" background: #030303; color: rgb(255, 255, 255); margin-top: 80px;">
-                <div class="card-header" style="background: #8B4513; text-align: center; font-size: 25px;">{{ __('Client Login') }}</div>
+                <div class="card-header" style="background: #8B4513; text-align: center; font-size: 25px;">{{ __('Provider Login') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{route('admin.auth')}}">

@@ -47,7 +47,7 @@
                 Login
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Client</a>
+                <a class="dropdown-item" href="{{route('admin.login')}}">Service Provider</a>
                 <a class="dropdown-item" href="#">Event Type</a>
               </div>
             </li>

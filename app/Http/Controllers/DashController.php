@@ -9,6 +9,22 @@ class DashController extends Controller
     public function showAdmin()
     {
         $data = [];
+    // Admin count 
+    	$data['admins_count'] = \App\Admin::select('name','email')->get();
+
+    	$data['total_admins'] = count($data['admins_count']);
+    	
+	// Client count 
+    	$data['clients_count'] = \App\Client::select('id','name','email')->get();
+
+    	$data['total_clients'] = count($data['clients_count']);
+
+    // Contact count 
+        $data['contacts_count'] = \App\Models\Contact::select('id','contact_name', 'email', 'phone', 'address')->get();
+
+        $data['total_contacts'] = count($data['contacts_count']);
+
+
         return view('admin.dashboard', $data);
     }
 }

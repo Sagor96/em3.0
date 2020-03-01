@@ -7,14 +7,30 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu" data-widget="tree">
             <!-- Optionally, you can add icons to the links -->
+            
+<!--Dashboard-->
             <li>
               <a href="{{ route('admin.dashboard') }}">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
               </a>
             </li>
 
+<!--Client-->
             <li class="treeview">
-                <a href="#"><i class="fa fa-id-card" aria-hidden="true"></i> <span>Service</span>
+              <a href="#"><i class="fa fa-user-md"></i> <span>Clients</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{ route('admin.contacts.index') }}">Contacts</a></li>
+                <li><a href="{{ route('admin.contacts.index') }}">Add Client</a></li>
+              </ul>
+            </li>
+
+<!--Service-->
+            <li class="treeview">
+                <a href="#"><i class="fa fa-id-card" aria-hidden="true"></i> <span>Services</span>
                   <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -25,105 +41,111 @@
                 </ul>
             </li>
 
-
+<!--Event-->            
             <li class="treeview">
-              <a href="#"><i class="fa fa-user-md"></i> <span>Client</span>
+              <a href="#"><i class="fa fa-user-circle-o"></i> <span>Events</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                   </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#">Clients</a></li>
-                <li><a href="#">Add Client</a></li>
-              </ul>
-            </li>
-    
-            <li class="treeview">
-              <a href="#"><i class="fa fa-user-circle-o"></i> <span>Lead</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                  </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#">Leads</a></li>
-                <li><a href="#">Add Lead</a></li>
+                <li><a href="#">Event List</a></li>
+                <li><a href="#">Add Event</a></li>
               </ul>
             </li>
 
+<!--Event Catagory-->
+            <li class="treeview">
+              <a href="#"><i class="fa fa-id-card" aria-hidden="true"></i> <span>Event Catagory</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#">Catagory List</a></li>
+                <li><a href="#">Add New Catagory</a></li>
+              </ul>
+            </li> 
 
+<!--Venue-->    
             <li class="treeview">
-              <a href="#"><i class="fa fa-id-card" aria-hidden="true"></i> <span>Hosting Type</span>
+              <a href="#"><i class="fa fa-id-card" aria-hidden="true"></i> <span>Event Venues</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                   </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#">Hosting Types</a></li>
-                <li><a href="#">Add New Hosting Types</a></li>
+                <li><a href="{{route('admin.venues.index')}}">Venue List</a></li>
+                <li><a href="{{route('admin.venues.create')}}">Add New Venue</a></li>
               </ul>
-            </li>         
-    
-            <!-- <li><a href="#"><i class="fa fa-link"></i> <span>Designation</span></a></li> -->
+            </li>
+
+<!--Order-->    
             <li class="treeview">
-              <a href="#"><i class="fa fa-id-card" aria-hidden="true"></i> <span>Package</span>
+              <a href="#"><i class="fa fa-users"></i> <span>Orders</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                   </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#">Packages</a></li>
-                <li><a href="#">Add New Package</a></li>
+                <li><a href="#">Order List</a></li>
+                <li><a href="#">Add New Order</a></li>
+              </ul>
+            </li>
+
+<!--Expence-->    
+            <li class="treeview">
+              <a href="#"><i class="fa fa-calendar-o"></i> <span>Expence</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#">Expence List</a></li>
+                <li><a href="3">Add Expence</a></li>
+              </ul>
+            </li>
+
+<!--Payment-->    
+            <li class="treeview">
+              <a href="#"><i class="fa fa-user-secret "></i> <span>Payments</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#">Payment List</a></li>
+                <li><a href="#">Add Payment</a></li>
               </ul>
             </li>
     
+<!--Staff List-->    
             <li class="treeview">
-              <a href="#"><i class="fa fa-users"></i> <span>Hosting</span>
+              <a href="#"><i class="fa fa-link"></i> <span>Staff Schedule</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                   </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#">Hostings</a></li>
-                <li><a href="#">Add Hosting</a></li>
+                <li><a href="#">Lists</a></li>
+                <li><a href="#">Add Schedule</a></li>
               </ul>
             </li>
-    
+
+<!--Staff Details-->
             <li class="treeview">
-              <a href="#"><i class="fa fa-calendar-o"></i> <span>Domain</span>
+              <a href="#"><i class="fa fa-link"></i> <span>Staff Details</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                   </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#">Domains</a></li>
-                <li><a href="3">Add Domain</a></li>
+                <li><a href="#">Staff Recoards</a></li>
+                <li><a href="#">Add Staff Profile</a></li>
               </ul>
             </li>
-    
-            <li class="treeview">
-              <a href="#"><i class="fa fa-user-secret "></i> <span>Income</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                  </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#">Incomes</a></li>
-                <li><a href="#">Add Income</a></li>
-              </ul>
-            </li>
-    
-            <li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>Expense</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                  </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#">Expenses</a></li>
-                <li><a href="#">Add Expense</a></li>
-              </ul>
-            </li>
-    
+
+<!--Report-->
             <li class="treeview">
               <a href="#"><i class="fa fa-bell"></i> <span>Reports</span>
                 <span class="pull-right-container">

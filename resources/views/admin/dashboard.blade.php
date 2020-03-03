@@ -91,7 +91,7 @@
               <p>Total Service</p>
             </div>
             <div class="icon">
-              <i class="ion ion-ios7 more"></i>
+              <i class="cart-arrow-down"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -154,7 +154,7 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>#3</h3>
+              <h3>{{  $total_venues }}</h3>
 
               <p>Total Venues</p>
             </div>

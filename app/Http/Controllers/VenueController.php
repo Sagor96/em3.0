@@ -19,7 +19,7 @@ class VenueController extends Controller
     {
       $data = [];
       $data['venues'] = \App\Models\Venue::select('id','v_name','v_addr','status')->get();
-      return view('venues.venue', $data);
+      return view('venue.venue', $data);
     }
 
     /**
@@ -30,7 +30,7 @@ class VenueController extends Controller
     public function create()
     {
       $data = [];
-      return view('venues.createVenue', $data);
+      return view('venue.createVenue', $data);
     }
 
     /**
@@ -91,7 +91,7 @@ class VenueController extends Controller
 
       $data['venues'] = \App\Models\Venue::select('id','v_name','v_addr','status')->find($id);
 
-      return view('venues.editVenue', $data);
+      return view('venue.editVenue', $data);
 
     }
 
@@ -118,8 +118,8 @@ class VenueController extends Controller
       }
 
       //insert to database
-      $service = \App\Models\Venue::find($id);
-      $service->update([
+      $venue = \App\Models\Venue::find($id);
+      $venue->update([
           'v_name'      => $request->input('v_name'),
           'v_addr'      => $request->input('v_addr'),
           'status'      => $request->input('status'),

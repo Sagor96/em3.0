@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Models;
 
 
 class ContactController extends Controller
@@ -21,7 +22,7 @@ class ContactController extends Controller
         $data['contacts'] = \App\Models\Contact::select('id','contact_name', 'email', 'phone', 'address')->orderBy('id')->get();
 
 
-        return view('contacts.contact', $data);
+        return view('contact.contact', $data);
     }
 
     /**
@@ -33,7 +34,7 @@ class ContactController extends Controller
     {
         $data = [];
         $data['clients'] = \App\Client::all();
-        return view('contacts.createContact', $data);
+        return view('contact.createContact', $data);
     }
 
     /**
@@ -59,14 +60,8 @@ class ContactController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // $request->merge([ 
-        //     'service_id' => implode(',', (array) $request->get('service_id'))
-        // ]);
-
-
 
         //insert to database
-        //\App\Models\Lead::create($request->all());
         \App\Models\Contact::create([
             'contact_name'          => $request->input('contact_name'),
             'email'                 => $request->input('email'),
@@ -102,7 +97,7 @@ class ContactController extends Controller
     {
         $data = [];
         $data['contacts'] = \App\Models\Contact::select('id','contact_name','email', 'phone','address')->find($id);
-        return view('contacts.editContact', $data);
+        return view('contact.editContact', $data);
     }
 
     /**
@@ -134,14 +129,13 @@ class ContactController extends Controller
 
 
 
-        //insert to database
-        
-        \App\Models\Contact::uodate([
-            'contact_name'          => $request->input('contact_name'),
-            'email'                 => $request->input('email'),
-            'phone'                 => $request->input('phone'),
-            'address'               => $request->input('address'),
-        ]);
+        $contact = \App\Models\Contact::find($id);
+      $contact->update([
+          'contact_name'      => $request->input('contact_name'),
+          'email'             => $request->input('email'),
+          'phone'             => $request->input('phone'),
+          'address'           => $request->input('address'),
+      ]);
 
         //redirect
         session()->flash('type', 'success');

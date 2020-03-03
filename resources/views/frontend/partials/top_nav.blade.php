@@ -23,7 +23,7 @@
               <li class="dropdown notifications-menu">
                 <!-- Menu toggle button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  Domain <i class="fa fa-bell-o"></i>
+                  News <i class="fa fa-bell-o"></i>
                   <span class="label label-danger">
                     #13</span>
                 </a>
@@ -52,7 +52,7 @@
               <li class="dropdown notifications-menu">
                 <!-- Menu toggle button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  Hosting <i class="fa fa-bell-o"></i>
+                  Report <i class="fa fa-bell-o"></i>
                   <span class="label label-warning">
                     #5
                     </span>

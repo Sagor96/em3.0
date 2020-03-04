@@ -24,6 +24,11 @@ class DashController extends Controller
 
         $data['total_contacts'] = count($data['contacts_count']);
 
+        // StaffDetail count 
+        $data['staffdetails_count'] = \App\Models\StaffDetail::select('id','staff_name', 'designation', 'phone', 'address')->get();
+
+        $data['total_staffdetails'] = count($data['staffdetails_count']);
+
     // Venue count 
         $data['venues_count'] = \App\Models\Venue::select('id','v_name','v_addr','status')->get();
 

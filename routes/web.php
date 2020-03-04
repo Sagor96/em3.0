@@ -41,4 +41,8 @@ Route::apiResource('contacts', 'ContactController');
 Route::resource('venues', 'VenueController');
 Route::apiResource('venues', 'VenueController');
 
+	//StaffDetail Zone
+Route::resource('staffdetails', 'StaffDetailController');
+Route::apiResource('staffdetails', 'StaffDetailController');
+
 });

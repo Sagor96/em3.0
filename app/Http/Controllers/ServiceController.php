@@ -7,8 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models;
 
-
-class TypeController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +16,9 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $data = [];
-        $data['types'] = \App\Models\Type::select('id','t_name', 't_detail')->orderBy('id')->get();
-        return view('type.type', $data);
+        $data['services'] = \App\Models\Service::with('venue')->select('id','s_name', 'amount','s_status','venue_id')->orderBy('id')->get();
+        return view('service.service', $data);
+
     }
 
     /**
@@ -30,7 +29,10 @@ class TypeController extends Controller
     public function create()
     {
         $data = [];
-        return view('type.type', $data);
+        $data['venues'] = \App\Models\Venue::all();
+      
+        return view('service.service', $data);
+        
     }
 
     /**
@@ -43,8 +45,10 @@ class TypeController extends Controller
     {
         //validate
         $rules = [
-            't_name'    => 'required',
-            't_detail'  => 'required',
+            's_name'            => 'required',
+            'amount'            => 'required|numeric',
+            's_status'          => 'required',
+            'venue_id'          => 'required|nullable',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -54,17 +58,18 @@ class TypeController extends Controller
         }
 
         //insert to database
-        \App\Models\Type::create([
-            't_name'                => $request->input('t_name'),
-            't_detail'              => $request->input('t_detail'),
+        \App\Models\Service::create([
+            's_name'            => $request->input('s_name'),
+            'amount'            => $request->input('amount'),
+            's_status'          => $request->input('s_status'),
+            'venue_id'          => $request->input('venue_id'),
         ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Catagory added Successfully');
+        session()->flash('message', 'Service added Successfully');
 
         return redirect()->back();
-    
     }
 
     /**
@@ -87,10 +92,11 @@ class TypeController extends Controller
     public function edit($id)
     {
         $data = [];
-        $data['types'] = \App\Models\Type::select('id', 't_name',  't_detail')->find($id);
+        $data['venues'] = \App\Models\Venue::all();
+        $data['services'] = \App\Models\Service::select('id','s_name', 'amount', 's_status','venue_id')->find($id);
 
-        return view('type.editType', $data);
-    
+        return view('service.editService', $data);
+
     }
 
     /**
@@ -102,10 +108,12 @@ class TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-    //validate
+        //validate
         $rules = [
-            't_name'    => 'required',
-            't_detail'  => 'required',
+            's_name'        => 'required',
+            'amount'        => 'required|numeric',
+            's_status'      => 'required',
+            'venue_id'      => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -115,18 +123,20 @@ class TypeController extends Controller
         }
 
         //insert to database
-        $type = \App\Models\Type::find($id);
-        $type->update([
-            't_name'    => $request->input('t_name'),
-            't_detail'  => $request->input('t_detail'),
+        $services = \App\Models\Service::find($id);
+        $services->update([
+            's_name'            => $request->input('s_name'),
+            'amount'            => $request->input('amount'),
+            's_status'          => $request->input('s_status'),
+            'venue_id'          => $request->input('venue_id'),
         ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Catagory Updated Successfully.');
+        session()->flash('message', 'Service Updated Successfully.');
 
         return redirect()->back();
-        
+
     }
 
     /**
@@ -137,12 +147,12 @@ class TypeController extends Controller
      */
     public function destroy($id)
     {
-        $type = \App\Models\Type::find($id);
-        $type->delete();
+        $services = \App\Models\Service::find($id);
+        $services->delete();
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Catagory Deleted Successfully.');
+        session()->flash('message', 'Service Deleted Successfully.');
 
         return redirect()->back();
     }

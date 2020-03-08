@@ -18,7 +18,6 @@ class CreateTypesTable extends Migration
             $table->timestamps();
             $table->string('t_name');
             $table->string('t_detail')->nullable();
-            $table->string('t_image',80)->nullable();
         });
     }
 

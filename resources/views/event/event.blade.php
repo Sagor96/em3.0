@@ -132,7 +132,7 @@
                       {{ session('message') }}
                   </div>
               @endif
-              <div class="box-body">
+                    <div class="box-body">
                         <div class="form-group">
                             <label for="email">Client email</label>
                             <select name="contact_id" class="form-control">

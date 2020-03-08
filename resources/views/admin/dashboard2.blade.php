@@ -100,6 +100,17 @@
     </div>
   </div>
 
+<!--Service-->
+   <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{  $total_services }}</h5>
+        <p class="card-text">Total Service</p>
+        <a href="{{route('admin.services.index')}}" class="btn btn-info">More info</a>
+      </div>
+    </div>
+  </div>
+
 
 </div>
 </section>

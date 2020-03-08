@@ -57,4 +57,8 @@ Route::apiResource('events', 'EventController');
 Route::resource('types', 'TypeController');
 Route::apiResource('types', 'TypeController');
 
+	//Service Zone
+Route::resource('services', 'ServiceController');
+Route::apiResource('services', 'ServiceController');
+
 });

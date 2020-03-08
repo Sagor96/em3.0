@@ -17,13 +17,10 @@ class CreateServicesTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('s_name');
-            $table->decimal('amount', 5, 2)->nullable();
+            $table->double('amount', 8, 2)->nullable();
             $table->tinyInteger('s_status')->default(1);
-            $table->string('image',80)->nullable();
             $table->integer('venue_id')->nullable();
 
-            //forein key
-            $table->foreign('venue_id')->references('id')->on('venues');
         });
     }
 

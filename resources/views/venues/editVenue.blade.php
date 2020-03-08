@@ -58,12 +58,12 @@
 					                    <input type="text" class="form-control" id="v_addr" placeholder="Venue Address" name="v_addr" value="{{ $venues->v_addr }}">
 					             </div>
                        <div class="form-group">
-                    <label for="status">Status</label>
-                    <select name="status" class="form-control">
+                        <label for="status">Status</label>
+                        <select name="status" class="form-control">
                         <option value="1" @if ($venues->status === 1) selected @endif>Empty</option>
                         <option value="0" @if ($venues->status === 0) selected @endif>Fixed</option>
-                    </select>
-                </div>
+                        </select>
+                       </div>
 	            </div>
                 <!-- /.box-body -->
 

@@ -1,19 +1,19 @@
 @extends('layouts.admins')
 
-@section('title','StaffUpdate')
+@section('title','Catagory Update')
 
-@section('header','Staff Detail Update')
+@section('header','Catagory Update')
 
 @section('main-content')
 
 <section class="content">
   <div class="row">
       <div class="col-md-6">
-        <h1 style="display: inline-block;">Edit Staff Detail</h1>
+        <h1 style="display: inline-block;">Edit Catagory</h1>
       </div>
       <div class="col-md-6">
         <div class="add-new">
-          <a href="{{ route('admin.staffdetails.index')}}" class="btn btn-success"><i class="fa fa-list-ul" aria-hidden="true"></i> &nbsp;Staff Details</a>
+          <a href="{{ route('admin.types.index')}}" class="btn btn-success"><i class="fa fa-list-ul" aria-hidden="true"></i> &nbsp;Catagory List</a>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
 
         <div class="box box-primary">
                 <!-- form start -->
-            <form role="form" action="{{ route('admin.staffdetails.update', $staffdetails->id) }}" method="post">
+            <form role="form" action="{{ route('admin.types.update', $types->id) }}" method="post">
 	              @csrf
 	              @method('PUT')
 
@@ -52,21 +52,13 @@
 	              @endif
                 <div class="box-body">
 					             <div class="form-group">
-                              <label for="staff_name">Staff Name</label>
-                              <input type="text" class="form-control" id="staff_name" placeholder="Staff Name" name="staff_name" value="{{ $staffdetails->staff_name }}">
+                              <label for="t_name">Catagory Name</label>
+                              <input type="text" class="form-control" id="t_name" placeholder="Catagory Name" name="t_name" value="{{ $types->t_name }}">
                        </div>
                        
                        <div class="form-group">
-                            <label for="designation">Staff Designation</label>
-                            <input type="text" class="form-control" id="designation" placeholder="Designation" name="designation" value="{{ $staffdetails->designation }}">
-                       </div>
-                       <div class="form-group">
-                            <label for="phone">StaffPhone</label>
-                            <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" value="{{ $staffdetails->phone }}">
-                       </div>
-                       <div class="form-group">
-                            <label for="address">Staff Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="Address" name="address" value="{{ $staffdetails->address }}">
+                            <label for="t_detail">Details</label>
+                            <input type="text" class="form-control" id="t_detail" placeholder="Details" name="t_detail" value="{{ $types->t_detail }}">
                        </div>
 	            </div>
                 <!-- /.box-body -->

@@ -40,7 +40,7 @@ class DashController extends Controller
         $data['total_payments'] = count($data['payments_count']);
 
     // Type count 
-        $data['types_count'] = \App\Models\Type::select('id','t_name', 't_detail', 't_image')->get();
+        $data['types_count'] = \App\Models\Type::select('id','t_name', 't_detail')->get();
 
         $data['total_types'] = count($data['types_count']);
 
@@ -49,6 +49,11 @@ class DashController extends Controller
         $data['venues_count'] = \App\Models\Venue::select('id','v_name','v_addr','status')->get();
 
         $data['total_venues'] = count($data['venues_count']);
+
+    // Service count 
+        $data['services_count'] = \App\Models\Service::select('id','s_name','amount','s_status','venue_id')->get();
+
+        $data['total_services'] = count($data['services_count']);
 
         return view('admin.dashboard2', $data);
     }

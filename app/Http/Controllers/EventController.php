@@ -129,8 +129,8 @@ class EventController extends Controller
         }
 
         //insert to database
-        $hosting = \App\Models\Event::find($id);
-        $hosting->update([
+        $events = \App\Models\Event::find($id);
+        $events->update([
             'contact_id'            => $request->input('contact_id'),
             'e_name'                => $request->input('e_name'),
             'type_id'               => $request->input('type_id'),

@@ -19,15 +19,31 @@ class DashController extends Controller
 
     	$data['total_clients'] = count($data['clients_count']);
 
+    // Event count 
+        $data['events_count'] = \App\Models\Event::select('id','contact_id','e_name' ,'type_id','e_date')->get();
+
+        $data['total_events'] = count($data['events_count']);
+
     // Contact count 
         $data['contacts_count'] = \App\Models\Contact::select('id','contact_name', 'email', 'phone', 'address')->get();
 
         $data['total_contacts'] = count($data['contacts_count']);
 
-        // StaffDetail count 
+    // StaffDetail count 
         $data['staffdetails_count'] = \App\Models\StaffDetail::select('id','staff_name', 'designation', 'phone', 'address')->get();
 
         $data['total_staffdetails'] = count($data['staffdetails_count']);
+
+    // Payment count 
+        $data['payments_count'] = \App\Models\Payment::select('id','p_method', 'p_status', 'p_date')->get();
+
+        $data['total_payments'] = count($data['payments_count']);
+
+    // Type count 
+        $data['types_count'] = \App\Models\Type::select('id','t_name', 't_detail', 't_image')->get();
+
+        $data['total_types'] = count($data['types_count']);
+
 
     // Venue count 
         $data['venues_count'] = \App\Models\Venue::select('id','v_name','v_addr','status')->get();

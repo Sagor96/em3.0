@@ -45,4 +45,16 @@ Route::apiResource('venues', 'VenueController');
 Route::resource('staffdetails', 'StaffDetailController');
 Route::apiResource('staffdetails', 'StaffDetailController');
 
+	//Payment Zone
+Route::resource('payments', 'PaymentController');
+Route::apiResource('payments', 'PaymentController');
+	
+	//Event Zone
+Route::resource('events', 'EventController');
+Route::apiResource('events', 'EventController');
+
+	//Type Zone
+Route::resource('types', 'TypeController');
+Route::apiResource('types', 'TypeController');
+
 });

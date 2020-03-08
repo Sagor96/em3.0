@@ -45,6 +45,17 @@
     </div>
   </div>
 
+  <!--Event-->
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{  $total_events }}</h5>
+        <p class="card-text">Total Events</p>
+        <a href="{{route('admin.events.index')}}" class="btn btn-info">More info</a>
+      </div>
+    </div>
+  </div>
+
   <!--Venue-->
    <div class="col-sm-6">
     <div class="card">
@@ -67,35 +78,24 @@
     </div>
   </div>
 
-  <!--Visitor-->
+  <!--Payment-->
    <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{  $total_clients }}</h5>
-        <p class="card-text">Total Visitors</p>
-        <a href="#" class="btn btn-primary">More info</a>
+        <h5 class="card-title">{{  $total_payments }}</h5>
+        <p class="card-text">Total Payments</p>
+        <a href="{{route('admin.payments.index')}}" class="btn btn-info">More info</a>
       </div>
     </div>
   </div>
 
-  <!--Client-->
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">{{  $total_contacts }}</h5>
-        <p class="card-text">Total Clients</p>
-        <a href="{{route('admin.contacts.index')}}" class="btn btn-info">More info</a>
-      </div>
-    </div>
-  </div>
-
-  <!--Venue-->
+  <!--Type-->
    <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{  $total_venues }}</h5>
-        <p class="card-text">Total Venues</p>
-        <a href="{{route('admin.venues.index')}}" class="btn btn-info">More info</a>
+        <h5 class="card-title">{{  $total_types }}</h5>
+        <p class="card-text">Total Catagory</p>
+        <a href="{{route('admin.types.index')}}" class="btn btn-info">More info</a>
       </div>
     </div>
   </div>

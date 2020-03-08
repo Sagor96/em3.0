@@ -1,20 +1,20 @@
 @extends('layouts.admins')
 
-@section('title','StaffList')
+@section('title','PaymentList')
 
-@section('header','Staff Details')
+@section('header','Payment List')
 
 @section('main-content')
 
 <section class="content">
       <div class="row">
         <div class="col-md-6">
-          <h1 style="display: inline-block;">Staff Details List</h1>
+          <h1 style="display: inline-block;">Payment List</h1>
         </div>
         <div class="col-md-6">
           <div class="add-new">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sdModalSm">
-              Add New Staff
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#pModalSm">
+              Add New Payment Details
             </button>
           </div>
         </div>
@@ -42,32 +42,31 @@
                   <thead>
                     <tr>
                         <th>SL</th>
-                        <th>Staff Name</th>
-                        <th>Designation</th>
-                        <th>Phone Number</th>
+                        <th>Payment Method</th>
+                        <th>Payment Status</th>
+                        <th>Payment Date</th>
                         <th>Action</th>
                     </tr>
                   </thead>
 
                   <tbody>
                     <?php $i=1; ?>
-                    @foreach($staffdetails as $staffdetail)
+                    @foreach($payments as $payment)
                     <tr>
                         <td>{{ $i++}}</td>
-                        <td>{{ $staffdetail->staff_name }}</td>
-                        <td>{{ $staffdetail->designation }}</td>
-                        <td>{{ $staffdetail->phone }}</td>
-                        <td>{{ $staffdetail->address }}</td>
+                        <td>{{ $payment->p_method }}</td>
+                        <td>{{ $payment->p_status ==1 ? 'Clear' : 'Due' }}</td>
+                        <td>{{ $payment->p_date }}</td>
                         <td>
                         <div class=" action">
-                        <a href="{{ route('admin.staffdetails.edit', $staffdetail->id)}}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit </a>
+                        <a href="{{ route('admin.payments.edit', $payment->id)}}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit </a>
                         <span>
                           <style type="text/css">
                             .myform{
                               display: inline;
                             }
                           </style>
-                          <form class="myform" action="{{ route('admin.staffdetails.destroy', $staffdetail->id) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                          <form class="myform" action="{{ route('admin.payments.destroy', $payment->id) }}" method="post" onsubmit="return confirm('Are you sure?')">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger float-left"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button>
@@ -91,10 +90,10 @@
   </div>
   <!-- /.row -->
 
-  <!--Create staffdetail-->
+  <!--Create payment-->
 
 <!-- Central Modal Small -->
-<div class="modal fade" id="sdModalSm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="pModalSm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
 
   <!-- Change class .modal-sm to change the size of the modal -->
@@ -103,13 +102,13 @@
 
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title w-100" id="myModalLabel">New Staff</h4>
+        <h4 class="modal-title w-100" id="myModalLabel">New Payment</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form role="form" action="{{ route('admin.staffdetails.store') }}" method="post">
+        <form role="form" action="{{ route('admin.payments.store') }}" method="post">
               @csrf
 
               @if ($errors->any())
@@ -133,20 +132,19 @@
               @endif
               <div class="box-body">
                         <div class="form-group">
-                            <label for="staff_name">Staff Name</label>
-                            <input type="text" class="form-control" id="staff_name" placeholder="Staff Name" name="staff_name" value="{{ old('staff_name') }}">
+                            <label for="p_method">Payment Method</label>
+                            <input type="text" class="form-control" id="p_method" placeholder="Method" name="p_method" value="{{ old('p_method') }}">
                        </div>
                        <div class="form-group">
-                            <label for="designation">Staff Designation</label>
-                            <input type="text" class="form-control" id="designation" placeholder="Designation" name="designation" value="{{ old('designation') }}">
+                            <label for="p_status">Payment Status</label>
+                            <select name="p_status" class="form-control">
+                              <option value="1">Clear</option>
+                              <option value="0">Due</option>
+                            </select>
                        </div>
                        <div class="form-group">
-                            <label for="phone">Staff Phone</label>
-                            <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" value="{{ old('phone') }}">
-                       </div>
-                       <div class="form-group">
-                            <label for="address">Staff Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="Address" name="address" value="{{ old('address') }}">
+                            <label for="p_date">Payment Date</label>
+                            <input type="date" class="form-control" id="p_date" placeholder="" name="p_date" value="{{ old('p_date') }}">
                        </div>
                  </div>
                 <!-- /.box-body -->

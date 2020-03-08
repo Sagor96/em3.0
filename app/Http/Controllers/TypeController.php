@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;        
 use Illuminate\Support\Facades\Validator;
 use App\Models;
 
-
-class StaffDetailController extends Controller
+class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +16,9 @@ class StaffDetailController extends Controller
      */
     public function index()
     {
-        $data=[];
-        $data['staffdetails'] = \App\Models\StaffDetail::select('id','staff_name', 'designation', 'phone', 'address')->orderBy('id')->get();
-
-
-        return view('staffdetail.staffdetail', $data);
+        $data = [];
+        $data['types'] = \App\Models\Type::select('id','t_name', 't_detail','t_image')->orderBy('id', 'DESC')->get();
+        return view('type.type', $data);
     }
 
     /**
@@ -32,7 +29,7 @@ class StaffDetailController extends Controller
     public function create()
     {
         $data = [];
-        return view('staffdetail.staffdetail', $data);
+        return view('type.type', $data);
     }
 
     /**
@@ -43,13 +40,12 @@ class StaffDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //Validation
+        //validate
         $rules = [
-                'staff_name'    => 'required',
-                'designation'   => 'required|max:80',
-                'phone'         => 'required|numeric|regex:/(01)[0-9]{9}/',
-                'address'       => 'required',
-            ];
+            't_name'    => 'required',
+            't_detail'  => 'required',
+            't_image'   => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
 
         $validator = Validator::make($request->all(), $rules);
 
@@ -57,20 +53,19 @@ class StaffDetailController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-
         //insert to database
-        \App\Models\StaffDetail::create([
-            'staff_name'            => $request->input('staff_name'),
-            'designation'           => $request->input('designation'),
-            'phone'                 => $request->input('phone'),
-            'address'               => $request->input('address'),
+        \App\Models\Type::create([
+            't_name'        => $request->input('t_name'),
+            't_detail'      => $request->input('t_detail'),
+            't_image'       =>$request->input('t_image')->store('public/image'),
         ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Staff Detail added Successfully');
+        session()->flash('message', 'Catagory added Successfully');
 
         return redirect()->back();
+    
     }
 
     /**
@@ -93,8 +88,10 @@ class StaffDetailController extends Controller
     public function edit($id)
     {
         $data = [];
-        $data['staffdetails'] = \App\Models\StaffDetail::select('id','staff_name','designation', 'phone','address')->find($id);
-        return view('staffdetail.editStaffdetail', $data);
+        $data['types'] = \App\Models\Type::select('id', 't_name',  't_detail',  't_image')->find($id);
+
+        return view('type.editType', $data);
+    
     }
 
     /**
@@ -106,12 +103,11 @@ class StaffDetailController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //validate 
+    //validate
         $rules = [
-                'staff_name'    => 'required',
-                'designation'   => 'required',
-                'phone'         => 'required|numeric|regex:/(01)[0-9]{9}/',
-                'address'       => 'required',
+            't_name'    => 'required',
+            't_detail'  => 'required',
+            't_image'   => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -120,23 +116,20 @@ class StaffDetailController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        
-
-
-    $staffdetail = \App\Models\StaffDetail::find($id);
-      $staffdetail->update([
-          'staff_name'        => $request->input('staff_name'),
-          'designation'       => $request->input('designation'),
-          'phone'             => $request->input('phone'),
-          'address'           => $request->input('address'),
-      ]);
+        //insert to database
+        $type = \App\Models\Type::find($id);
+        $type->update([
+            't_name'    => $request->input('t_name'),
+            't_detail'  => $request->input('t_detail'),
+            't_image'   => $request->input('t_image'),
+        ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Staff Details Updated Successfully');
+        session()->flash('message', 'Type Updated Successfully.');
 
         return redirect()->back();
-
+        
     }
 
     /**
@@ -147,14 +140,13 @@ class StaffDetailController extends Controller
      */
     public function destroy($id)
     {
-        $staffdetail = \App\Models\StaffDetail::find($id);
-        $staffdetail->delete();
+        $type = \App\Models\Type::find($id);
+        $type->delete();
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Staff Detail Deleted Successfully.');
+        session()->flash('message', 'Type Deleted Successfully.');
 
         return redirect()->back();
-
     }
 }

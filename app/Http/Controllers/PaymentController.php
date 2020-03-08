@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models;
 
 
-class StaffDetailController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +18,9 @@ class StaffDetailController extends Controller
     public function index()
     {
         $data=[];
-        $data['staffdetails'] = \App\Models\StaffDetail::select('id','staff_name', 'designation', 'phone', 'address')->orderBy('id')->get();
+        $data['payments'] = \App\Models\Payment::select('id','p_method', 'p_status', 'p_date')->orderBy('id')->get();
 
-
-        return view('staffdetail.staffdetail', $data);
+        return view('payment.payment', $data);
     }
 
     /**
@@ -32,7 +31,7 @@ class StaffDetailController extends Controller
     public function create()
     {
         $data = [];
-        return view('staffdetail.staffdetail', $data);
+        return view('payment.payment', $data);
     }
 
     /**
@@ -43,13 +42,12 @@ class StaffDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //Validation
+        //validate 
         $rules = [
-                'staff_name'    => 'required',
-                'designation'   => 'required|max:80',
-                'phone'         => 'required|numeric|regex:/(01)[0-9]{9}/',
-                'address'       => 'required',
-            ];
+            'p_method'      => 'required',
+            'p_status'      => 'required',
+            'p_date'        => 'required|date',
+        ];
 
         $validator = Validator::make($request->all(), $rules);
 
@@ -59,18 +57,18 @@ class StaffDetailController extends Controller
 
 
         //insert to database
-        \App\Models\StaffDetail::create([
-            'staff_name'            => $request->input('staff_name'),
-            'designation'           => $request->input('designation'),
-            'phone'                 => $request->input('phone'),
-            'address'               => $request->input('address'),
+        \App\Models\Payment::create([
+            'p_method'              => $request->input('p_method'),
+            'p_status'              => $request->input('p_status'),
+            'p_date'                => $request->input('p_date'),
         ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Staff Detail added Successfully');
+        session()->flash('message', 'Payment added Successfully');
 
         return redirect()->back();
+
     }
 
     /**
@@ -93,8 +91,8 @@ class StaffDetailController extends Controller
     public function edit($id)
     {
         $data = [];
-        $data['staffdetails'] = \App\Models\StaffDetail::select('id','staff_name','designation', 'phone','address')->find($id);
-        return view('staffdetail.editStaffdetail', $data);
+        $data['payments'] = \App\Models\Payment::select('id','p_method','p_status', 'p_date')->find($id);
+        return view('payment.editPayment', $data);
     }
 
     /**
@@ -108,10 +106,9 @@ class StaffDetailController extends Controller
     {
         //validate 
         $rules = [
-                'staff_name'    => 'required',
-                'designation'   => 'required',
-                'phone'         => 'required|numeric|regex:/(01)[0-9]{9}/',
-                'address'       => 'required',
+                'p_method'      => 'required',
+                'p_status'      => 'required',
+                'p_date'        => 'required|date',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -120,20 +117,18 @@ class StaffDetailController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        
 
 
-    $staffdetail = \App\Models\StaffDetail::find($id);
+    $staffdetail = \App\Models\Payment::find($id);
       $staffdetail->update([
-          'staff_name'        => $request->input('staff_name'),
-          'designation'       => $request->input('designation'),
-          'phone'             => $request->input('phone'),
-          'address'           => $request->input('address'),
-      ]);
+            'p_method'              => $request->input('p_method'),
+            'p_status'              => $request->input('p_status'),
+            'p_date'                => $request->input('p_date'),
+                  ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Staff Details Updated Successfully');
+        session()->flash('message', 'Payment Updated Successfully');
 
         return redirect()->back();
 
@@ -147,12 +142,12 @@ class StaffDetailController extends Controller
      */
     public function destroy($id)
     {
-        $staffdetail = \App\Models\StaffDetail::find($id);
+        $staffdetail = \App\Models\Payment::find($id);
         $staffdetail->delete();
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Staff Detail Deleted Successfully.');
+        session()->flash('message', 'Payment Deleted Successfully.');
 
         return redirect()->back();
 

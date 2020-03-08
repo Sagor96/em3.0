@@ -1,8 +1,8 @@
 @extends('layouts.admins')
 
-@section('title','StaffUpdate')
+@section('title','PaymentUpdate')
 
-@section('header','Staff Detail Update')
+@section('header','Payment Update')
 
 @section('main-content')
 
@@ -13,7 +13,7 @@
       </div>
       <div class="col-md-6">
         <div class="add-new">
-          <a href="{{ route('admin.staffdetails.index')}}" class="btn btn-success"><i class="fa fa-list-ul" aria-hidden="true"></i> &nbsp;Staff Details</a>
+          <a href="{{ route('admin.payments.index')}}" class="btn btn-success"><i class="fa fa-list-ul" aria-hidden="true"></i> &nbsp;Payment Details</a>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
 
         <div class="box box-primary">
                 <!-- form start -->
-            <form role="form" action="{{ route('admin.staffdetails.update', $staffdetails->id) }}" method="post">
+            <form role="form" action="{{ route('admin.payments.update', $payments->id) }}" method="post">
 	              @csrf
 	              @method('PUT')
 
@@ -52,21 +52,20 @@
 	              @endif
                 <div class="box-body">
 					             <div class="form-group">
-                              <label for="staff_name">Staff Name</label>
-                              <input type="text" class="form-control" id="staff_name" placeholder="Staff Name" name="staff_name" value="{{ $staffdetails->staff_name }}">
+                              <label for="staff_name">Payment Method</label>
+                              <input type="text" class="form-control" id="p_method" placeholder="Method" name="p_method" value="{{ $payments->p_method }}">
                        </div>
                        
                        <div class="form-group">
-                            <label for="designation">Staff Designation</label>
-                            <input type="text" class="form-control" id="designation" placeholder="Designation" name="designation" value="{{ $staffdetails->designation }}">
+                            <label for="p_status">Payment Status</label>
+                            <select name="p_status" class="form-control">
+                        <option value="1" @if ($payments->status === 1) selected @endif>Clear</option>
+                        <option value="0" @if ($payments->status === 0) selected @endif>Due</option>
+                    </select>
                        </div>
                        <div class="form-group">
-                            <label for="phone">StaffPhone</label>
-                            <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" value="{{ $staffdetails->phone }}">
-                       </div>
-                       <div class="form-group">
-                            <label for="address">Staff Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="Address" name="address" value="{{ $staffdetails->address }}">
+                            <label for="p_date">Payment Date</label>
+                            <input type="date" class="form-control" id="p_date" placeholder="" name="p_date" value="{{ $payments->date }}">
                        </div>
 	            </div>
                 <!-- /.box-body -->

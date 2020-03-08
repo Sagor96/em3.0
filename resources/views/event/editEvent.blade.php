@@ -1,8 +1,8 @@
 @extends('layouts.admins')
 
-@section('title','StaffUpdate')
+@section('title','EventUpdate')
 
-@section('header','Staff Detail Update')
+@section('header','Event Update')
 
 @section('main-content')
 
@@ -13,7 +13,7 @@
       </div>
       <div class="col-md-6">
         <div class="add-new">
-          <a href="{{ route('admin.staffdetails.index')}}" class="btn btn-success"><i class="fa fa-list-ul" aria-hidden="true"></i> &nbsp;Staff Details</a>
+          <a href="{{ route('admin.events.index')}}" class="btn btn-success"><i class="fa fa-list-ul" aria-hidden="true"></i> &nbsp;Event List</a>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
 
         <div class="box box-primary">
                 <!-- form start -->
-            <form role="form" action="{{ route('admin.staffdetails.update', $staffdetails->id) }}" method="post">
+            <form role="form" action="{{ route('admin.events.update', $events->id) }}" method="post">
 	              @csrf
 	              @method('PUT')
 
@@ -52,21 +52,30 @@
 	              @endif
                 <div class="box-body">
 					             <div class="form-group">
-                              <label for="staff_name">Staff Name</label>
-                              <input type="text" class="form-control" id="staff_name" placeholder="Staff Name" name="staff_name" value="{{ $staffdetails->staff_name }}">
-                       </div>
-                       
-                       <div class="form-group">
-                            <label for="designation">Staff Designation</label>
-                            <input type="text" class="form-control" id="designation" placeholder="Designation" name="designation" value="{{ $staffdetails->designation }}">
-                       </div>
-                       <div class="form-group">
-                            <label for="phone">StaffPhone</label>
-                            <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" value="{{ $staffdetails->phone }}">
+                              <label for="email">Contact Email</label>
+                              <select name="contact_id" class="form-control">
+                                <?php $contacts=\App\Models\Contact::all(); ?>
+                                @foreach($contacts as $contact)
+                                <option value="{{ $contact->id }}" @if($contact->id==$events->contact_id) selected='selected' @endif>{{ $contact->email }}</option>
+                    @endforeach
+                  </select>
                        </div>
                        <div class="form-group">
-                            <label for="address">Staff Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="Address" name="address" value="{{ $staffdetails->address }}">
+                            <label for="e_name">Event Name</label>
+                            <input type="text" class="form-control" id="e_name" placeholder="Event Name"  name="e_name" value="{{ $events->e_name }}">
+                       </div>
+                       <div class="form-group">
+                              <label for="t_name">Catagory Name</label>
+                              <select name="type_id" class="form-control">
+                                <?php $types=\App\Models\Type::all(); ?>
+                                @foreach($types as $type)
+                                <option value="{{ $type->id }}" @if($contact->id==$events->type_id) selected='selected' @endif>{{ $type->t_name }}</option>
+                                @endforeach
+                                </select>
+                       </div>
+                       <div class="form-group">
+                            <label for="e_date">Event Date</label>
+                            <input type="date" class="form-control" id="e_date" placeholder="" name="e_date" value="{{ $events->e_date }}">
                        </div>
 	            </div>
                 <!-- /.box-body -->

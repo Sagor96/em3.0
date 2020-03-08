@@ -10,5 +10,7 @@ class Contact extends Model
         'contact_name','email', 'phone', 'address', 'client_id', 
     ]; 
 
+    
+
 
 }

@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models;
+use App\Models\Contact;
+use App\Models\Type;
 
 
-class StaffDetailController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +19,10 @@ class StaffDetailController extends Controller
      */
     public function index()
     {
-        $data=[];
-        $data['staffdetails'] = \App\Models\StaffDetail::select('id','staff_name', 'designation', 'phone', 'address')->orderBy('id')->get();
-
-
-        return view('staffdetail.staffdetail', $data);
+        $data = [];
+      $data['events'] = \App\Models\Event::with('contact', 'type')->select('id','contact_id','e_name', 'type_id','e_date')->orderBy('id')->get();
+      
+        return view('event.event', $data);
     }
 
     /**
@@ -32,7 +33,11 @@ class StaffDetailController extends Controller
     public function create()
     {
         $data = [];
-        return view('staffdetail.staffdetail', $data);
+        $data['contacts'] = \App\Models\Contact::all();
+        $data['types'] = \App\Models\Type::all();
+      
+        return view('event.createEvent', $data);
+        
     }
 
     /**
@@ -43,13 +48,13 @@ class StaffDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //Validation
+        //validate
         $rules = [
-                'staff_name'    => 'required',
-                'designation'   => 'required|max:80',
-                'phone'         => 'required|numeric|regex:/(01)[0-9]{9}/',
-                'address'       => 'required',
-            ];
+            'contact_id'        => 'required',
+            'e_name'            => 'required',
+            'type_id'           => 'required',
+            'e_date'            => 'required|date',
+        ];
 
         $validator = Validator::make($request->all(), $rules);
 
@@ -57,18 +62,17 @@ class StaffDetailController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-
         //insert to database
-        \App\Models\StaffDetail::create([
-            'staff_name'            => $request->input('staff_name'),
-            'designation'           => $request->input('designation'),
-            'phone'                 => $request->input('phone'),
-            'address'               => $request->input('address'),
+        \App\Models\Event::create([
+            'contact_id'        => $request->input('contact_id'),
+            'e_name'            => $request->input('e_name'),
+            'type_id'           => $request->input('type_id'),
+            'e_date'            => $request->input('e_date'),
         ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Staff Detail added Successfully');
+        session()->flash('message', 'Event added Successfully');
 
         return redirect()->back();
     }
@@ -93,8 +97,12 @@ class StaffDetailController extends Controller
     public function edit($id)
     {
         $data = [];
-        $data['staffdetails'] = \App\Models\StaffDetail::select('id','staff_name','designation', 'phone','address')->find($id);
-        return view('staffdetail.editStaffdetail', $data);
+        $data['contacts'] = \App\Models\Contact::all();
+        $data['types'] = \App\Models\Type::all();
+        $data['events'] = \App\Models\Event::select('id','contact_id', 'e_name', 'type_id','e_date')->find($id);
+
+        return view('event.editEvent', $data);
+
     }
 
     /**
@@ -106,12 +114,12 @@ class StaffDetailController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //validate 
+        //validate
         $rules = [
-                'staff_name'    => 'required',
-                'designation'   => 'required',
-                'phone'         => 'required|numeric|regex:/(01)[0-9]{9}/',
-                'address'       => 'required',
+            'contact_id'        => 'required|integer',
+            'e_name'            => 'required',
+            'type_id'           => 'required|integer',
+            'e_date'            => 'required|date',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -120,20 +128,18 @@ class StaffDetailController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        
-
-
-    $staffdetail = \App\Models\StaffDetail::find($id);
-      $staffdetail->update([
-          'staff_name'        => $request->input('staff_name'),
-          'designation'       => $request->input('designation'),
-          'phone'             => $request->input('phone'),
-          'address'           => $request->input('address'),
-      ]);
+        //insert to database
+        $hosting = \App\Models\Event::find($id);
+        $hosting->update([
+            'contact_id'            => $request->input('contact_id'),
+            'e_name'                => $request->input('e_name'),
+            'type_id'               => $request->input('type_id'),
+            'e_date'                => $request->input('e_date'),
+        ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Staff Details Updated Successfully');
+        session()->flash('message', 'Event Updated Successfully.');
 
         return redirect()->back();
 
@@ -147,14 +153,13 @@ class StaffDetailController extends Controller
      */
     public function destroy($id)
     {
-        $staffdetail = \App\Models\StaffDetail::find($id);
-        $staffdetail->delete();
+        $event = \App\Models\Event::find($id);
+        $event->delete();
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Staff Detail Deleted Successfully.');
+        session()->flash('message', 'Event Deleted Successfully.');
 
         return redirect()->back();
-
     }
 }

@@ -6,11 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models;
-use App\Models\Contact;
-use App\Models\Type;
 
-
-class EventController extends Controller
+class StaffScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +17,9 @@ class EventController extends Controller
     public function index()
     {
         $data = [];
-        $data['events'] = \App\Models\Event::with('contact', 'type')->select('id','contact_id','e_name', 'type_id','e_date')->orderBy('id')->get();
+        $data['schedules'] = \App\Models\Schedule::with('event', 'venue','staffdetail')->select('id','created_at','event_id', 'venue_id','staffdetail_id')->orderBy('id')->get();
       
-        return view('event.event', $data);
+        return view('staffschedule.staffschedule', $data);
     }
 
     /**
@@ -33,10 +30,11 @@ class EventController extends Controller
     public function create()
     {
         $data = [];
-        $data['contacts'] = \App\Models\Contact::all();
-        $data['types'] = \App\Models\Type::all();
+        $data['events'] = \App\Models\Event::all();
+        $data['venues'] = \App\Models\Venue::all();
+        $data['staffdetails'] = \App\Models\Staffdetail::all();
       
-        return view('event.event', $data);
+        return view('staffschedule.staffschedule', $data);
         
     }
 
@@ -50,10 +48,10 @@ class EventController extends Controller
     {
         //validate
         $rules = [
-            'contact_id'        => 'required',
-            'e_name'            => 'required',
-            'type_id'           => 'required',
-            'e_date'            => 'required|date',
+            'event_id'        => 'required',
+            'venue_id'        => 'required',
+            'staffdetail_id'  => 'required',
+            
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -63,18 +61,18 @@ class EventController extends Controller
         }
 
         //insert to database
-        \App\Models\Event::create([
-            'contact_id'        => $request->input('contact_id'),
-            'e_name'            => $request->input('e_name'),
-            'type_id'           => $request->input('type_id'),
-            'e_date'            => $request->input('e_date'),
+        \App\Models\Schedule::create([
+            'event_id'        => $request->input('event_id'),
+            'venue_id'        => $request->input('venue_id'),
+            'staffdetail_id'  => $request->input('staffdetail_id'),
         ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Event added Successfully');
+        session()->flash('message', 'Staff Schedule added Successfully');
 
         return redirect()->back();
+
     }
 
     /**
@@ -97,11 +95,13 @@ class EventController extends Controller
     public function edit($id)
     {
         $data = [];
-        $data['contacts'] = \App\Models\Contact::all();
-        $data['types'] = \App\Models\Type::all();
-        $data['events'] = \App\Models\Event::select('id','contact_id', 'e_name', 'type_id','e_date')->find($id);
+        $data['events'] = \App\Models\Event::all();
+        $data['venues'] = \App\Models\Venue::all();
+        $data['staffdetails'] = \App\Models\Staffdetail::all();
+        
+        $data['schedules'] = \App\Models\Schedule::select('id','event_id', 'venue_id', 'staffdetail_id')->find($id);
 
-        return view('event.editEvent', $data);
+        return view('staffschedule.editstaffschedule', $data);
 
     }
 
@@ -116,10 +116,10 @@ class EventController extends Controller
     {
         //validate
         $rules = [
-            'contact_id'        => 'required|integer',
-            'e_name'            => 'required',
-            'type_id'           => 'required|integer',
-            'e_date'            => 'required|date',
+            'event_id'        => 'required|integer',
+            'venue_id'        => 'required|integer',
+            'staffdetail_id'  => 'required|integer',
+            
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -129,17 +129,16 @@ class EventController extends Controller
         }
 
         //insert to database
-        $events = \App\Models\Event::find($id);
-        $events->update([
-            'contact_id'            => $request->input('contact_id'),
-            'e_name'                => $request->input('e_name'),
-            'type_id'               => $request->input('type_id'),
-            'e_date'                => $request->input('e_date'),
+        $schedules = \App\Models\Schedule::find($id);
+        $schedules->update([
+            'event_id'            => $request->input('event_id'),
+            'venue_id'            => $request->input('venue_id'),
+            'staffdetail_id'      => $request->input('staffdetail_id'),
         ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Event Updated Successfully.');
+        session()->flash('message', 'Staff Schedule Updated Successfully.');
 
         return redirect()->back();
 
@@ -153,12 +152,12 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        $event = \App\Models\Event::find($id);
-        $event->delete();
+        $schedule = \App\Models\Schedule::find($id);
+        $schedule->delete();
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Event Deleted Successfully.');
+        session()->flash('message', 'Staff Schedule Deleted Successfully.');
 
         return redirect()->back();
     }

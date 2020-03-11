@@ -111,6 +111,27 @@
     </div>
   </div>
 
+<!--Order-->
+   <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{  $total_orders }}</h5>
+        <p class="card-text">Total Order</p>
+        <a href="{{route('admin.orders.index')}}" class="btn btn-info">More info</a>
+      </div>
+    </div>
+  </div>
+
+<!--Schedule-->
+   <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{  $total_schedules }}</h5>
+        <p class="card-text">Total Staff Schedule</p>
+        <a href="{{route('admin.staffschedules.index')}}" class="btn btn-info">More info</a>
+      </div>
+    </div>
+  </div>
 
 </div>
 </section>

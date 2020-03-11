@@ -6,11 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models;
-use App\Models\Contact;
-use App\Models\Type;
 
 
-class EventController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +18,9 @@ class EventController extends Controller
     public function index()
     {
         $data = [];
-        $data['events'] = \App\Models\Event::with('contact', 'type')->select('id','contact_id','e_name', 'type_id','e_date')->orderBy('id')->get();
+        $data['orders'] = \App\Models\Order::with('contact', 'payment')->select('id','created_at','contact_id','payment_id','order_total')->orderBy('id')->get();
       
-        return view('event.event', $data);
+        return view('order.order', $data);
     }
 
     /**
@@ -34,9 +32,9 @@ class EventController extends Controller
     {
         $data = [];
         $data['contacts'] = \App\Models\Contact::all();
-        $data['types'] = \App\Models\Type::all();
+        $data['payments'] = \App\Models\Payment::all();
       
-        return view('event.event', $data);
+        return view('order.order', $data);
         
     }
 
@@ -50,10 +48,10 @@ class EventController extends Controller
     {
         //validate
         $rules = [
-            'contact_id'        => 'required',
-            'e_name'            => 'required',
-            'type_id'           => 'required',
-            'e_date'            => 'required|date',
+            'contact_id'            => 'required',
+            'payment_id'            => 'required',
+            'order_total'           => 'required|numeric',
+            
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -63,16 +61,16 @@ class EventController extends Controller
         }
 
         //insert to database
-        \App\Models\Event::create([
+        \App\Models\Order::create([
             'contact_id'        => $request->input('contact_id'),
-            'e_name'            => $request->input('e_name'),
-            'type_id'           => $request->input('type_id'),
-            'e_date'            => $request->input('e_date'),
+            'payment_id'        => $request->input('payment_id'),
+            'order_total'       => $request->input('order_total'),
+            
         ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Event added Successfully');
+        session()->flash('message', 'Order added Successfully');
 
         return redirect()->back();
     }
@@ -98,10 +96,10 @@ class EventController extends Controller
     {
         $data = [];
         $data['contacts'] = \App\Models\Contact::all();
-        $data['types'] = \App\Models\Type::all();
-        $data['events'] = \App\Models\Event::select('id','contact_id', 'e_name', 'type_id','e_date')->find($id);
+        $data['payments'] = \App\Models\Payment::all();
+        $data['orders'] = \App\Models\Order::select('id','created_at','contact_id', 'payment_id','order_total')->find($id);
 
-        return view('event.editEvent', $data);
+        return view('order.editOrder', $data);
 
     }
 
@@ -117,9 +115,10 @@ class EventController extends Controller
         //validate
         $rules = [
             'contact_id'        => 'required|integer',
-            'e_name'            => 'required',
-            'type_id'           => 'required|integer',
-            'e_date'            => 'required|date',
+            'payment_id'        => 'required|integer',
+            'order_total'       => 'required|numeric',
+            
+            
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -129,17 +128,16 @@ class EventController extends Controller
         }
 
         //insert to database
-        $events = \App\Models\Event::find($id);
+        $events = \App\Models\Order::find($id);
         $events->update([
             'contact_id'            => $request->input('contact_id'),
-            'e_name'                => $request->input('e_name'),
-            'type_id'               => $request->input('type_id'),
-            'e_date'                => $request->input('e_date'),
+            'payment_id'            => $request->input('payment_id'),
+            'order_total'           => $request->input('order_total'),
         ]);
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Event Updated Successfully.');
+        session()->flash('message', 'Order Updated Successfully.');
 
         return redirect()->back();
 
@@ -153,12 +151,12 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        $event = \App\Models\Event::find($id);
-        $event->delete();
+        $order = \App\Models\Order::find($id);
+        $order->delete();
 
         //redirect
         session()->flash('type', 'success');
-        session()->flash('message', 'Event Deleted Successfully.');
+        session()->flash('message', 'Order Deleted Successfully.');
 
         return redirect()->back();
     }

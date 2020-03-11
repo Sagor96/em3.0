@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models;
 
 class DashController extends Controller
 {
@@ -54,6 +55,16 @@ class DashController extends Controller
         $data['services_count'] = \App\Models\Service::select('id','s_name','amount','s_status','venue_id')->get();
 
         $data['total_services'] = count($data['services_count']);
+
+    // Order count 
+        $data['orders_count'] = \App\Models\Order::select('id','created_at','contact_id','payment_id','order_total')->get();
+
+        $data['total_orders'] = count($data['orders_count']);
+
+   // Staffschedule count 
+        $data['schedules_count'] = \App\Models\Schedule::select('id','created_at','event_id','venue_id','staffdetail_id')->get();
+
+        $data['total_schedules'] = count($data['schedules_count']);
 
         return view('admin.dashboard2', $data);
     }

@@ -61,4 +61,12 @@ Route::apiResource('types', 'TypeController');
 Route::resource('services', 'ServiceController');
 Route::apiResource('services', 'ServiceController');
 
+	//Order Zone
+Route::resource('orders', 'OrderController');
+Route::apiResource('orders', 'OrderController');
+
+	//Staffschedule Zone
+Route::resource('staffschedules', 'StaffscheduleController');
+Route::apiResource('staffschedules', 'StaffscheduleController');
+
 });
